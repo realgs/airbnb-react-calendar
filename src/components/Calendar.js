@@ -9,7 +9,7 @@ export default class Calendar extends React.Component {
     super(props);
     this.goMonthBack = this.goMonthBack.bind(this);
     this.goMonthForward = this.goMonthForward.bind(this);
-    this.toggleIsSecondPick = this.toggleIsSecondPick.bind(this);
+    this.togglesetSecondDate = this.togglesetSecondDate.bind(this);
     this.state = {
       today: new Date(),
       current: {
@@ -18,7 +18,7 @@ export default class Calendar extends React.Component {
       },
       from: null,
       to: null,
-      isSecondPick: false,
+      setSecondDate: false,
       unavailable: [],
     };
   }
@@ -44,9 +44,9 @@ export default class Calendar extends React.Component {
           from: prevState.to ? prevState.to : this.state.to,
           to: prevState.from ? prevState.from : this.state.from
         });
-        this.setState({ isSecondPick: !prevState.isSecondPick });
+        this.setState({ setSecondDate: !prevState.setSecondDate });
         if (!prevState.to) {
-          this.setState({ isSecondPick: prevState.isSecondPick });
+          this.setState({ setSecondDate: prevState.setSecondDate });
         }
       }
     }
@@ -59,10 +59,10 @@ export default class Calendar extends React.Component {
     const newCurrent = getNextMonth(this.state.current.month, this.state.current.year);
     this.setState({ current: { month: newCurrent.month, year: newCurrent.year } });
   }
-  toggleIsSecondPick(day) {
-    this.state.isSecondPick ? this.setState({ to: day }) : this.setState({ from: day });
+  togglesetSecondDate(day) {
+    this.state.setSecondDate ? this.setState({ to: day }) : this.setState({ from: day });
     this.setState({
-      isSecondPick: !this.state.isSecondPick
+      setSecondDate: !this.state.setSecondDate
     });
   }
   swapDates() {
@@ -84,8 +84,8 @@ export default class Calendar extends React.Component {
           current={this.state.current}
           from={this.state.from}
           to={this.state.to}
-          isSecondPick={this.state.isSecondPick}
-          toggleIsSecondPick={this.toggleIsSecondPick}
+          setSecondDate={this.state.setSecondDate}
+          togglesetSecondDate={this.togglesetSecondDate}
           unavailable={unavailableDates}
         />
         <SubscriptInfo lastupdate={23} />

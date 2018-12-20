@@ -7,11 +7,12 @@ export default class Month extends React.Component {
     super(props);
     this.renderDay = this.renderDay.bind(this);
     this.renderWeeks = this.renderWeeks.bind(this);
+    this.canSet = this.canSet.bind(this);
     this.state = {
       from: null,
       to: null,
-      last: null,
-      isSecondPick: false,
+      lastModified: null,
+      setSecondDate: false,
       current: this.props.current,
     };
   }
@@ -28,26 +29,37 @@ export default class Month extends React.Component {
           from: prevState.to ? prevState.to : this.state.to,
           to: prevState.from ? prevState.from : this.state.from
         });
-        this.setState({ isSecondPick: !prevState.isSecondPick });
+        this.setState({ setSecondDate: !prevState.setSecondDate });
         if (!prevState.to) {
-          this.setState({ isSecondPick: prevState.isSecondPick });
+          this.setState({ setSecondDate: prevState.setSecondDate });
         }
       }
     }
   }
   handleSetDay(day) {
-    //console.log(`The day: ${day} has been picked!`);
-    console.log(this.props.unavailable);
-    this.state.isSecondPick ? this.setState({ to: day }) : this.setState({ from: day });
-    this.setState({ isSecondPick: !this.state.isSecondPick });
-    this.props.toggleIsSecondPick(day);
+    if (this.canSet(day)) {
+      this.state.setSecondDate ? this.setState({ to: day }) : this.setState({ from: day });
+      this.setState({ setSecondDate: !this.state.setSecondDate });
+      this.setState({ lastModified: day });
+      this.props.togglesetSecondDate(day);
+    } else {
+      console.log('Sorry these days are unavailable.')
+    }
+  }
+  canSet(day) {
+    const minMax = [this.state.lastModified, day].sort();
+    const naDays = this.props.unavailable.filter((d) => {
+      return  d > minMax[0] && d < minMax[1];
+    });
+    return !Array.isArray(naDays) || !naDays.length;
   }
 
   renderDay(day, index) {
     const thisDay = new Date(day);
     const isoDate = getDateISO(thisDay);
     const dayNA = this.props.unavailable.indexOf(isoDate) > -1;
-    const daySelected = this.state.from == isoDate || this.state.to == isoDate || this.state.from < isoDate && this.state.to > isoDate;
+    const daySelected = this.state.from == isoDate || this.state.to == isoDate;
+    const dayBetween = this.state.from < isoDate && this.state.to > isoDate;
     //console.log(isoDate);
     if (day[0] === 'indent' || day[0] === 'pad') {
       return (
@@ -58,7 +70,7 @@ export default class Month extends React.Component {
         <td key={isoDate} id={isoDate} className="day">
           <button
           id={isoDate}
-          className={`day__button${daySelected ? ' day__button__selected' : ''}${dayNA ? ' day__button__na' : ''}`}
+          className={`day__button${daySelected || dayBetween ? ' day__button__selected' : ''}${dayNA ? ' day__button__na' : ''}`}
           disabled={daySelected || dayNA} onClick={(e) => { this.handleSetDay(e.target.id) }}
           >
             {thisDay.getDate()}

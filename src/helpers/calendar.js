@@ -45,6 +45,7 @@ export const thisMonthDates = (month = THIS_MONTH, year = THIS_YEAR) => {
   return monthDatesDivided;
 };
 //console.log(thisMonthDates(0, 2019));
+
 // (bool) Checks if a value is a date
 export const isDate = date => {
   const isDate = Object.prototype.toString.call(date) === '[object Date]';
@@ -85,8 +86,6 @@ export const isSameDay = (date, basedate = new Date()) => {
 
 }
 
-// (string) Formats the given date as YYYY-MM-DD
-// Months and Days are zero padded
 export const getDateISO = (date = new Date) => {
 
   if (!isDate(date)) return null;
@@ -98,9 +97,7 @@ export const getDateISO = (date = new Date) => {
   ].join('-');
 
 }
-// ({month, year}) Gets the month and year before the given month and year
-// For example: getPreviousMonth(1, 2000) => {month: 12, year: 1999}
-// while: getPreviousMonth(12, 2000) => {month: 11, year: 2000}
+
 export const getPreviousMonth = (prevMonth, prevYear) => {
   const newMonth = (prevMonth > 0) ? prevMonth - 1 : 11;
   const newYear = (prevMonth > 0) ? prevYear : prevYear - 1;
@@ -108,9 +105,7 @@ export const getPreviousMonth = (prevMonth, prevYear) => {
   return { month: newMonth, year: newYear };
 }
 
-// ({month, year}) Gets the month and year after the given month and year
-// For example: getNextMonth(1, 2000) => {month: 2, year: 2000}
-// while: getNextMonth(12, 2000) => {month: 1, year: 2001}
+
 export const getNextMonth = (month, year) => {
   const nextMonth = (month < 11) ? month + 1 : 0;
   const nextMonthYear = (month < 11) ? year : year + 1;
@@ -121,30 +116,30 @@ export const getNextMonth = (month, year) => {
 // Returns an array of the calendar dates.
 // Each calendar date is represented as an array => [YYYY, MM, DD]
 
-export default (month = THIS_MONTH, year = THIS_YEAR) => {
+// export default (month = THIS_MONTH, year = THIS_YEAR) => {
 
-  // Get number of days in the month and the month's first day
+//   // Get number of days in the month and the month's first day
 
-  const monthDays = getMonthDays(month, year);
-  const monthFirstDay = getMonthFirstDay(month, year);
+//   const monthDays = getMonthDays(month, year);
+//   const monthFirstDay = getMonthFirstDay(month, year);
 
-  // Get number of days to be displayed from previous and next months
-  // These ensure a total of 42 days (6 weeks) displayed on the calendar
+//   // Get number of days to be displayed from previous and next months
+//   // These ensure a total of 42 days (6 weeks) displayed on the calendar
 
-  // Get the previous and next months and years
+//   // Get the previous and next months and years
 
-  const { month: prevMonth, year: prevMonthYear } = getPreviousMonth(month, year);
-  const { month: nextMonth, year: nextMonthYear } = getNextMonth(month, year);
+//   const { month: prevMonth, year: prevMonthYear } = getPreviousMonth(month, year);
+//   const { month: nextMonth, year: nextMonthYear } = getNextMonth(month, year);
 
 
-  // Builds dates to be displayed from current month
+//   // Builds dates to be displayed from current month
 
-  const thisMonthDates = [...new Array(monthDays)].map((n, index) => {
-    const day = index + 1;
-    return [year, zeroPad(month, 2), zeroPad(day, 2)];
-  });
+//   const thisMonthDates = [...new Array(monthDays)].map((n, index) => {
+//     const day = index + 1;
+//     return [year, zeroPad(month, 2), zeroPad(day, 2)];
+//   });
 
-  // Combines all dates from previous, current and next months
-  return [...prevMonthDates, ...thisMonthDates];
+//   // Combines all dates from previous, current and next months
+//   return [...prevMonthDates, ...thisMonthDates];
 
-}
+// }
