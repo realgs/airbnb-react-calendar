@@ -1,0 +1,32 @@
+.calendar {
+  width: $calendarWidth;
+  padding: $calendarPadding;
+  border: 1px solid $grayBorder;
+  border-radius: 3px;
+}
+
+.calendar__header {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  font-weight: bold;
+}
+
+.calendar__arrow__button {
+  border: 1px solid $grayArrow;
+  border-radius: 3px;
+  outline: none;
+  padding: 0;
+  height: $ml-size;
+  width: $l-size;
+}
+
+.calendar__arrow__left {
+  height: 22px;
+  width: auto;
+}
+
+.calendar__arrow__right {
+  height: 22px;
+  width: auto;
+}

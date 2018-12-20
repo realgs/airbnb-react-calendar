@@ -1,0 +1,32 @@
+ html {
+   font-family: Helvetica, Arial, sans-serif;
+   font-size: 62.5%;
+   -ms-box-sizing: border-box;
+   -moz-box-sizing: border-box;
+   -webkit-box-sizing: border-box;
+   box-sizing: border-box;
+ }
+
+ *,
+ *:before,
+ *:after {
+   box-sizing: inherit;
+ }
+
+ body {
+   background: #ffffff;
+   font-family: Helvetica, Arial, sans-serif;
+   font-size: $m-size;
+   margin: 0;
+   display: flex;
+   justify-content: center;
+   align-items: center;
+ }
+
+ button {
+   cursor: pointer;
+ }
+
+ button:disabled {
+   cursor: default;
+ }
