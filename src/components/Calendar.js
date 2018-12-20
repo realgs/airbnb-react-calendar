@@ -87,6 +87,7 @@ export default class Calendar extends React.Component {
           setSecondDate={this.state.setSecondDate}
           togglesetSecondDate={this.togglesetSecondDate}
           unavailable={unavailableDates}
+          minStay={this.props.minStay}
         />
         <SubscriptInfo lastupdate={23} />
       </div>
