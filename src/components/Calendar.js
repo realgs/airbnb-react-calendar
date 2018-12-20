@@ -2,6 +2,7 @@ import React from 'react';
 import calendar, { THIS_YEAR, THIS_MONTH, MONTHS, getPreviousMonth, getNextMonth } from '../helpers/calendar';
 import Month from './Month';
 import SubscriptInfo from './SubscriptInfo';
+import {unavailableDates} from '../data/unavailable';
 
 export default class Calendar extends React.Component {
   constructor(props){
@@ -18,25 +19,37 @@ export default class Calendar extends React.Component {
       from: null,
       to: null,
       isSecondPick: false,
+      unavailable: [],
     };
   }
   componentDidMount() {
     const today = new Date().setHours(0,0,0,0);
     this.setState({ today });
+    try {
+      if (unavailableDates) {
+        console.log('Unavailable dates loaded.');
+      }
+    } catch (error) {
+      console.log(`Error loading unavailable dates: ${e}`);
+    }
   }
   componentDidUpdate(prevProps, prevState) {
-    // if (this.state.to && this.state.from) {
-    //   let fromDate = new Date(this.state.from);
-    //   let toDate = new Date(this.state.to);
-    //   // console.log(`From: ${fromDate}`);
-    //   // console.log(`To: ${toDate}`);
-    //   if (fromDate > toDate) {
-    //     this.setState({
-    //       from: prevState.to,
-    //       to: prevState.from
-    //     })
-    //   }
-    // }
+    if (this.state.to && this.state.from) {
+      let fromDate = new Date(this.state.from);
+      let toDate = new Date(this.state.to);
+      if (fromDate > toDate) {
+        //console.log(`-----Switched days from: ${fromDate} --- ${toDate}`);
+        //console.log(`To: ${toDate} --- ${fromDate}`);
+        this.setState({
+          from: prevState.to ? prevState.to : this.state.to,
+          to: prevState.from ? prevState.from : this.state.from
+        });
+        this.setState({ isSecondPick: !prevState.isSecondPick });
+        if (!prevState.to) {
+          this.setState({ isSecondPick: prevState.isSecondPick });
+        }
+      }
+    }
   }
   goMonthBack() {
     const newCurrent = getPreviousMonth(this.state.current.month, this.state.current.year);
@@ -73,6 +86,7 @@ export default class Calendar extends React.Component {
           to={this.state.to}
           isSecondPick={this.state.isSecondPick}
           toggleIsSecondPick={this.toggleIsSecondPick}
+          unavailable={unavailableDates}
         />
         <SubscriptInfo lastupdate={23} />
       </div>

@@ -20,10 +20,6 @@
   border: none;
 }
 
-.day_na {
-  text-decoration: line-through;
-}
-
 .day__button {
   color: $grayText;
   border: none;
@@ -34,4 +30,8 @@
 
 .day__button__selected {
   background: #01A599;
+}
+
+.day__button__na {
+  text-decoration: line-through;
 }

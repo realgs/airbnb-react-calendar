@@ -22,8 +22,8 @@ export default class Month extends React.Component {
       let fromDate = new Date(this.state.from);
       let toDate = new Date(this.state.to);
       if (fromDate > toDate) {
-        console.log(`-----Switched from: ${fromDate}`);
-        console.log(`To: ${toDate}`);
+        console.log(`-----Switched days from: ${fromDate.toLocaleDateString()} --- ${toDate.toLocaleDateString()}`);
+        console.log(`To: ${toDate.toLocaleDateString()} --- ${fromDate.toLocaleDateString()}`);
         this.setState({
           from: prevState.to ? prevState.to : this.state.to,
           to: prevState.from ? prevState.from : this.state.from
@@ -35,25 +35,32 @@ export default class Month extends React.Component {
       }
     }
   }
-  handleSetDay(day){
-    console.log(`The day: ${day} has been picked!`);
-    //this.setState({ from: day});
-    this.state.isSecondPick ? this.setState({ to: day }) : this.setState({ from: day});
+  handleSetDay(day) {
+    //console.log(`The day: ${day} has been picked!`);
+    console.log(this.props.unavailable);
+    this.state.isSecondPick ? this.setState({ to: day }) : this.setState({ from: day });
     this.setState({ isSecondPick: !this.state.isSecondPick });
-    //this.props.toggleIsSecondPick(day);
+    this.props.toggleIsSecondPick(day);
   }
 
   renderDay(day, index) {
     const thisDay = new Date(day);
     const isoDate = getDateISO(thisDay);
+    const dayNA = this.props.unavailable.indexOf(isoDate) > -1;
+    const daySelected = this.state.from == isoDate || this.state.to == isoDate || this.state.from < isoDate && this.state.to > isoDate;
+    //console.log(isoDate);
     if (day[0] === 'indent' || day[0] === 'pad') {
       return (
         <td key={index} id={index} className="day day__blank"></td>
       );
     } else {
       return (
-        <td key={getDateISO(thisDay)} id={getDateISO(thisDay)} className="day">
-          <button id={getDateISO(thisDay)} className={`day__button${this.state.from == isoDate || this.state.to == isoDate ? ' day__button__selected' : ''}`} disabled={this.state.from == isoDate || this.state.to == isoDate} onClick={(e) => { this.handleSetDay(e.target.id)}}>
+        <td key={isoDate} id={isoDate} className="day">
+          <button
+          id={isoDate}
+          className={`day__button${daySelected ? ' day__button__selected' : ''}${dayNA ? ' day__button__na' : ''}`}
+          disabled={daySelected || dayNA} onClick={(e) => { this.handleSetDay(e.target.id) }}
+          >
             {thisDay.getDate()}
           </button>
         </td>
