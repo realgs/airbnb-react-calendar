@@ -1,5 +1,5 @@
 import React from 'react';
-import calendar, { getMonthFirstDay, thisMonthDates, getDateISO } from '../helpers/calendar';
+import { getMonthFirstDay, thisMonthDates, getDateISO } from '../helpers/calendar';
 import { WEEK_DAYS } from '../helpers/calendar';
 
 export default class Month extends React.Component {
@@ -12,7 +12,7 @@ export default class Month extends React.Component {
       from: null,
       to: null,
       lastModified: null,
-      reset: true,
+      reset: this.props.reset,
       current: this.props.current,
       naDays: [],
     };
@@ -20,16 +20,20 @@ export default class Month extends React.Component {
   componentDidMount() {
   }
   componentDidUpdate(prevProps, prevState) {
-    if (this.state.to && this.state.from) {
-      let fromDate = new Date(this.state.from);
-      let toDate = new Date(this.state.to);
-      if (fromDate > toDate) {
-        //console.log(`-----Switched days from: ${fromDate.toLocaleDateString()} --- ${toDate.toLocaleDateString()}`);
-        //console.log(`To: ${toDate.toLocaleDateString()} --- ${fromDate.toLocaleDateString()}`);
-        this.setState({
-          from: prevState.to ? prevState.to : this.state.to,
-          to: prevState.from ? prevState.from : this.state.from
-        });
+    if (this.state.from) {
+      document.getElementById("checkin").innerHTML = this.state.from;
+      if (this.state.to) {
+        document.getElementById("checkout").innerHTML = this.state.to;
+        let fromDate = new Date(this.state.from);
+        let toDate = new Date(this.state.to);
+        if (fromDate > toDate) {
+          //console.log(`-----Switched days from: ${fromDate.toLocaleDateString()} --- ${toDate.toLocaleDateString()}`);
+          //console.log(`To: ${toDate.toLocaleDateString()} --- ${fromDate.toLocaleDateString()}`);
+          this.setState({
+            from: prevState.to ? prevState.to : this.state.to,
+            to: prevState.from ? prevState.from : this.state.from
+          });
+        }
       }
     }
   }
@@ -42,9 +46,11 @@ export default class Month extends React.Component {
         to: null,
         reset: false,
       });
+      this.props.toggleReset();
     } else {
       if (this.canSet(day)) {
         this.setState({ to: day, lastModified: day, reset: true });
+        this.props.toggleReset();
       } else {
         console.log('Sorry these days are unavailable.')
       }

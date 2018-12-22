@@ -1,0 +1,22 @@
+.header {
+  border-bottom: 1px solid $grayBorder;
+  padding-bottom: $s-size;
+}
+
+.header__price {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-end;
+}
+
+.header__price__value {
+  font-size: $l-size;
+}
+
+.header__price__note {
+  padding: $xxs-size;
+}
+
+.header__rating {
+  font-size: $xs-size;
+}

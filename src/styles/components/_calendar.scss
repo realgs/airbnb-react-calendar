@@ -1,11 +1,33 @@
-.calendar {
-  width: $calendarWidth;
+.calendar__header {
+  margin-top: $xxs-size;
+  display: flex;
+  flex-direction: column;
+}
+
+.calendar__dates {
+  margin-top: $xxs-size;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  border: 1px solid $grayBorder;
+  border-radius: 3px;
+  padding: $xs-size;
+}
+
+.calendar__dates__checkin,
+.calendar__dates__checkout {
+  border: none;
+  outline: none;
+}
+
+.calendar__picker {
+  margin-top: $xxs-size;
   padding: $calendarPadding;
   border: 1px solid $grayBorder;
   border-radius: 3px;
 }
 
-.calendar__header {
+.calendar__nav {
   display: flex;
   flex-direction: row;
   justify-content: space-between;

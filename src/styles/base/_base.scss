@@ -23,6 +23,19 @@
    align-items: center;
  }
 
+ .wrapper {
+   display: flex;
+   width: $calendarWidth;
+   flex-direction: column;
+   border: 1px solid $grayBorder;
+   border-radius: 3px;
+   padding: $s-size;
+ }
+
+ .hidden {
+   display: none;
+ }
+
  button {
    cursor: pointer;
  }
