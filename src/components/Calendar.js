@@ -14,6 +14,7 @@ export default class Calendar extends React.Component {
     this.chooseCheckOut = this.chooseCheckOut.bind(this);
     this.toggleReset = this.toggleReset.bind(this);
     this.togglePickerVisibility = this.togglePickerVisibility.bind(this);
+    this.handleSetDay = this.handleSetDay.bind(this);
     this.state = {
       today: new Date(),
       current: {
@@ -22,11 +23,12 @@ export default class Calendar extends React.Component {
       },
       from: null,
       to: null,
+      lastModified: null,
       setSecondDate: false,
       unavailable: [],
       hidePicker: true,
       reset: true,
-      stayLength: this.props.stayLength,
+      naDays: [],
     };
   }
   componentDidMount() {
@@ -41,26 +43,54 @@ export default class Calendar extends React.Component {
     }
   }
   componentDidUpdate(prevProps, prevState) {
-    if (this.state.to && this.state.from) {
-      let fromDate = new Date(this.state.from);
-      let toDate = new Date(this.state.to);
-      const stayLength = (toDate - fromDate);
-      console.log(stayLength);
-      this.setState({ stayLength });
-      this.props.setStayLength(stayLength);
-      if (fromDate > toDate) {
-        //console.log(`-----Switched days from: ${fromDate} --- ${toDate}`);
-        //console.log(`To: ${toDate} --- ${fromDate}`);
-        this.setState({
-          from: prevState.to ? prevState.to : this.state.to,
-          to: prevState.from ? prevState.from : this.state.from
-        });
-        this.setState({ setSecondDate: !prevState.setSecondDate });
-        if (!prevState.to) {
-          this.setState({ setSecondDate: prevState.setSecondDate });
+    if (this.state.from) {
+      document.getElementById("checkin").innerHTML = this.state.from;
+      if (this.state.to) {
+        document.getElementById("checkout").innerHTML = this.state.to;
+        let fromDate = new Date(this.state.from);
+        let toDate = new Date(this.state.to);
+        if (fromDate > toDate) {
+          //console.log(`-----Switched days from: ${fromDate.toLocaleDateString()} --- ${toDate.toLocaleDateString()}`);
+          //console.log(`To: ${toDate.toLocaleDateString()} --- ${fromDate.toLocaleDateString()}`);
+          this.setState({
+            from: prevState.to ? prevState.to : this.state.to,
+            to: prevState.from ? prevState.from : this.state.from
+          });
         }
       }
     }
+  }
+
+  handleSetDay(day) {
+    if (this.state.reset) {
+      this.setState({
+        from: day,
+        lastModified: day,
+        to: null,
+        reset: false,
+      });
+      this.toggleReset();
+    } else {
+      if (this.canSet(day)) {
+        this.setState({ to: day, lastModified: day, reset: true });
+        const fromDate = new Date(this.state.from);
+        const toDate = new Date(day);
+        const oneDay = 1000 * 60 * 60 * 24;
+        this.props.setStayLength(Math.round(Math.abs((fromDate.getTime() - toDate.getTime()) / (oneDay))));
+        this.toggleReset();
+        this.togglePickerVisibility();
+      } else {
+        console.log('Sorry these days are unavailable.')
+      }
+    }
+  }
+  canSet(day) {
+    const minMax = [this.state.lastModified, day].sort();
+    const naDays = unavailableDates.filter((d) => {
+      return d > minMax[0] && d < minMax[1];
+    });
+    this.setState({ naDays });
+    return !Array.isArray(naDays) || !naDays.length;
   }
   goMonthBack() {
     const newCurrent = getPreviousMonth(this.state.current.month, this.state.current.year);
@@ -129,7 +159,8 @@ export default class Calendar extends React.Component {
               togglePickerVisibility={this.togglePickerVisibility}
               reset={this.state.reset}
               toggleReset={this.toggleReset}
-              stayLength={this.state.stayLength}
+              naDays={this.state.naDays}
+              handleSetDay={this.handleSetDay}
             />
             <SubscriptInfo lastupdate={23} />
           </div>

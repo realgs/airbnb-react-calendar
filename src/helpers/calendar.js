@@ -1,3 +1,7 @@
+export const round2Decimals = (num) => {
+  return Math.round(num * 100 + Number.EPSILON) / 100;
+};
+
 export const THIS_YEAR = +(new Date().getFullYear());
 export const THIS_MONTH = +(new Date().getMonth());
 
