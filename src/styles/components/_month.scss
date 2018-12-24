@@ -4,8 +4,10 @@
 }
 
 .month__weekday {
-  font-weight: normal;
+  font-weight: 600;
   width: $cellSize;
+  padding-bottom: $xxxs-size;
+  color: $weekdays;
 }
 
 .day {
@@ -29,7 +31,7 @@
 }
 
 .day__button__selected {
-  background: #01A599;
+  background: $selected;
 }
 
 .day__button__na {
@@ -61,5 +63,15 @@
   40%,
   60% {
     transform: translate3d(2px, 2px, 0);
+  }
+}
+
+@media screen and (min-width: 376px) {
+  .day {
+    width: $largeCellSize;
+    height: $largeCellSize;
+  }
+  .month__weekday {
+    width: $largeCellSize;
   }
 }

@@ -10,13 +10,32 @@
 }
 
 .header__price__value {
-  font-size: $l-size;
+  font-size: $ml-size;
+  font-weight: 700;
 }
 
 .header__price__note {
-  padding: $xxs-size;
+  padding: $xxxs-size;
+  font-size: $xs-size;
+  font-weight: 600;
 }
 
 .header__rating {
+  padding-top: $xxs-size;
+  display: flex;
+  justify-content: row;
+  align-items: center;
+}
+
+.header__rating__star,
+.header__rating__halfStar,
+.header__rating__blankStar {
+  width: $s-size;
+  height: $s-size;
+}
+
+.header__reviews {
+  padding-left: $xxxs-size;
   font-size: $xs-size;
+  font-weight: 600;
 }

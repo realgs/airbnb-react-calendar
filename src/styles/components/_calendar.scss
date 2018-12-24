@@ -1,3 +1,27 @@
+.calendar {
+  overflow: visible;
+  height: 80px;
+}
+
+.calendar__bubble {
+  position: absolute;
+  top: -10px;
+  left: 20px;
+  z-index: 20;
+  width: $l-size;
+  height: $l-size;
+  color: rgb(117, 117, 117);
+}
+
+._c3dsty {
+  fill: rgba(0, 0, 0, 0);
+  stroke: rgb(235, 235, 235)
+}
+
+._whdw9f {
+  fill: rgb(255, 255, 255);
+}
+
 .calendar__header {
   margin-top: $xxs-size;
   display: flex;
@@ -5,13 +29,14 @@
 }
 
 .calendar__dates {
+  font-size: $s-size;
   margin-top: $xxs-size;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
   border: 1px solid $grayBorder;
   border-radius: 3px;
-  padding: $xs-size;
+  padding: $xxs-size;
 }
 
 .calendar__dates__checkin,
@@ -20,18 +45,28 @@
   outline: none;
 }
 
+.calendar__dates__separator {
+  height: $ml-size;
+  width: auto;
+}
+
 .calendar__picker {
+  background: #fff;
   margin-top: $xxs-size;
   padding: $calendarPadding;
   border: 1px solid $grayBorder;
   border-radius: 3px;
+  position: relative !important;
+  z-index: 100;
 }
 
 .calendar__nav {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
+  align-items: center;
   font-weight: bold;
+  padding-bottom: $xxs-size;
 }
 
 .calendar__arrow__button {
@@ -51,4 +86,13 @@
 .calendar__arrow__right {
   height: 22px;
   width: auto;
+}
+
+@media screen and (min-width: 376px) {
+  .calendar__picker {
+    padding: $largeCalendarPadding;
+  }
+  .calendar__dates {
+    font-size: $m-size;
+  }
 }

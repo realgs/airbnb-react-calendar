@@ -26,6 +26,7 @@ export default class Calendar extends React.Component {
       unavailable: [],
       hidePicker: true,
       reset: true,
+      stayLength: this.props.stayLength,
     };
   }
   componentDidMount() {
@@ -43,6 +44,10 @@ export default class Calendar extends React.Component {
     if (this.state.to && this.state.from) {
       let fromDate = new Date(this.state.from);
       let toDate = new Date(this.state.to);
+      const stayLength = (toDate - fromDate);
+      console.log(stayLength);
+      this.setState({ stayLength });
+      this.props.setStayLength(stayLength);
       if (fromDate > toDate) {
         //console.log(`-----Switched days from: ${fromDate} --- ${toDate}`);
         //console.log(`To: ${toDate} --- ${fromDate}`);
@@ -86,7 +91,6 @@ export default class Calendar extends React.Component {
   }
   render() {
     return (
-      <div className="wrapper__calendar">
         <div className="calendar">
           <div className="calendar__header">
             <span>Dates</span>
@@ -94,12 +98,17 @@ export default class Calendar extends React.Component {
               <button id="checkin" className="calendar__dates__checkin" onClick={this.chooseCheckIn}>
                 Check In
               </button>
+              <img src="./images/right-arrow.png" alt="date from - to separator" className="calendar__dates__separator"></img>
               <button id="checkout" className="calendar__dates__checkout" onClick={this.chooseCheckOut}>
                 Check Out
               </button>
             </div>
           </div>
           <div className={`calendar__picker${this.state.hidePicker ? ' hidden' : ''}`}>
+          <svg role="presentation" focusable="false" className="calendar__bubble">
+            <path className="_whdw9f" d="M0,10 20,10 10,0z"></path>
+            <path className="_c3dsty" d="M0,10 10,0 20,10"></path>
+          </svg>
             <div className="calendar__nav">
               <button className="calendar__arrow__button" onClick={this.goMonthBack}>
                 <img src="./images/left-arrow.png" alt="previous month" className="calendar__arrow__left"></img>
@@ -117,14 +126,14 @@ export default class Calendar extends React.Component {
               togglesetSecondDate={this.togglesetSecondDate}
               unavailable={unavailableDates}
               minStay={this.props.minStay}
-              togglePickerVisibility={this.state.togglePickerVisibility}
+              togglePickerVisibility={this.togglePickerVisibility}
               reset={this.state.reset}
               toggleReset={this.toggleReset}
+              stayLength={this.state.stayLength}
             />
             <SubscriptInfo lastupdate={23} />
           </div>
         </div>
-      </div>
     );
   }
 }

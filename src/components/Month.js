@@ -38,7 +38,6 @@ export default class Month extends React.Component {
     }
   }
   handleSetDay(day) {
-
     if (this.state.reset) {
       this.setState({
         from: day,
@@ -51,6 +50,7 @@ export default class Month extends React.Component {
       if (this.canSet(day)) {
         this.setState({ to: day, lastModified: day, reset: true });
         this.props.toggleReset();
+        this.props.togglePickerVisibility();
       } else {
         console.log('Sorry these days are unavailable.')
       }

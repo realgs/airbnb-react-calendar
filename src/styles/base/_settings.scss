@@ -6,15 +6,26 @@ $m-size: 1.6rem;
 $s-size: 1.4rem;
 $xs-size: 1.2rem;
 $xxs-size: 0.8rem;
+$xxxs-size: 0.4rem;
 $desktop-breakpoint: 45rem;
 //Sizes
-$calendarWidth: 300px;
-$calendarPadding: 16px;
+$calendarWidth: 250px;
+$largeCalendarWidth: 376px;
+$calendarPadding: $xxs-size;
+$largeCalendarPadding: $m-size;
 $cellSize: calc( (#{$calendarWidth} - 2 * #{$calendarPadding}) / 7);
+$largeCellSize: calc( (#{$largeCalendarWidth} - 2 * #{$largeCalendarPadding}) / 7);
 $weekDaysHeight: calc( 0.7 * #{$cellSize});
+$weekDaysLargeHeight: calc( 0.7 * #{$largeCellSize});
 //Colors
 $lightgray: rgb(130, 136, 138);
 $grayText: rgb(216, 216, 216);
 $grayBorder: rgb(228, 231, 231);
 $grayArrow: rgb(196, 196, 196);
 $gray: gray;
+$weekdays: #757575;
+$selected: #01A599;
+$turquoise: #0D888D;
+$submit: #FF5A5F;
+$white: #fff;
+$darkGray: rgb(72, 72, 72);

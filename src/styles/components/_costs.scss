@@ -1,0 +1,24 @@
+.costs {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  font-size: $s-size;
+}
+
+.costs__cost {
+  padding: $xs-size 0;
+  color: $grayText;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  border-bottom: 1px solid $grayBorder;
+}
+
+.costs__bonus {
+  color: $turquoise;
+}
+.costs__sum {
+  color: $gray;
+  font-weight: bold;
+  border: none;
+}
