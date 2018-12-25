@@ -2,21 +2,27 @@ import React from 'react';
 import Calendar from './Calendar';
 import Header from './Header';
 import Costs from './Costs';
+import { stayDetails } from '../data/stayDetails';
 
 export default class Reservation extends React.Component {
   constructor(props) {
     super(props);
     this.setStayLength = this.setStayLength.bind(this);
     this.state ={
-      price: 59.9,
+      price: 0,
       currency: '$',
-      rating : 3.5,
-      reviews : 123,
-      bonus : 40,
-      cleaningFee : 10,
-      stayLength : 1,
-      minStay: 2,
+      rating : 0,
+      reviews : 0,
+      bonus : 0,
+      cleaningFee : 0,
+      stayLength : undefined,
+      minStay: undefined,
     };
+  }
+  componentDidMount(){
+    this.setState({
+      ...stayDetails
+    });
   }
 
   setStayLength (stayLength) {

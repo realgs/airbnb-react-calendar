@@ -162,7 +162,7 @@ export default class Calendar extends React.Component {
               naDays={this.state.naDays}
               handleSetDay={this.handleSetDay}
             />
-            <SubscriptInfo lastupdate={23} />
+            <SubscriptInfo lastupdate={2} />
           </div>
         </div>
     );

@@ -34,13 +34,9 @@
  }
 
  .hidden {
-   // Hide content via default
    visibility: hidden;
    opacity: 0;
-   transition: visibility 0s linear 0.33s, opacity 0.33s linear; // Show if checkbox is clicked
-   // visibility: visible;
-   // opacity: 1;
-   //transition-delay: 0s;
+   transition: visibility 0s linear 0.1s, opacity 0.1s linear;
  }
 
  button {

@@ -2,8 +2,10 @@ import React from 'react';
 import {round2Decimals} from '../helpers/calendar';
 
 const Costs = ({ price, currency, stayLength, cleaningFee, bonus}) => {
-  const amount = price * stayLength;
+  const amount = round2Decimals( price * stayLength );
   const serviceFee = round2Decimals( price * stayLength * 0.1 );
+  const total = round2Decimals(amount + cleaningFee + serviceFee - bonus);
+
   return (
     <div className="costs">
       <div className="costs__cost">
@@ -24,17 +26,20 @@ const Costs = ({ price, currency, stayLength, cleaningFee, bonus}) => {
         </span>
         <span className="costs__cost__amount">{`${currency}${serviceFee}`}</span>
       </div>
+      { bonus > 0 && (
       <div className="costs__cost costs__bonus">
         <span className="costs__cost__description">
           Bonus funds
         </span>
         <span className="costs__cost__amount">{`-${currency}${ bonus }`}</span>
       </div>
+      )
+      }
       <div className="costs__cost costs__sum">
         <span className="costs__cost__description">
           Total
         </span>
-        <span className="costs__cost__amount">${round2Decimals(amount + cleaningFee + serviceFee - bonus) }</span>
+        <span className="costs__cost__amount">${ total >= 0 ? total : 0 }</span>
       </div>
     </div>
   );
