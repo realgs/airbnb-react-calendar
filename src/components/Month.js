@@ -1,5 +1,5 @@
 import React from 'react';
-import { getMonthFirstDay, thisMonthDates, getDateISO } from '../helpers/calendar';
+import { thisMonthDates, getDateISO } from '../helpers/calendar';
 import { WEEK_DAYS } from '../helpers/calendar';
 
 export default class Month extends React.Component {
@@ -7,12 +7,6 @@ export default class Month extends React.Component {
     super(props);
     this.renderDay = this.renderDay.bind(this);
     this.renderWeeks = this.renderWeeks.bind(this);
-    this.state = {
-      from: this.props.from,
-      to: this.props.to,
-      current: this.props.current,
-      naDays: this.props.naDays,
-    };
   }
   componentDidMount() {
   }
@@ -21,25 +15,25 @@ export default class Month extends React.Component {
   }
 
   renderDay(day, index) {
-    const thisDay = new Date(day);
-    const isoDate = getDateISO(thisDay);
-    const dayNA = this.props.unavailable.indexOf(isoDate) > -1;
-    const daySelected = this.props.from == isoDate || this.props.to == isoDate;
-    const dayBetween = this.props.from < isoDate && this.props.to > isoDate;
-    const dayConflict = this.props.naDays.indexOf(isoDate) > -1;
+    const currentDate = new Date(day);
+    const today = getDateISO(currentDate);
+    const dayNA = this.props.unavailable.indexOf(today) > -1;
+    const daySelected = this.props.from == today || this.props.to == today;
+    const dayBetween = this.props.from < today && this.props.to > today;
+    const dayConflict = this.props.naDays.indexOf(today) > -1;
     if (day[0] === 'indent' || day[0] === 'pad') {
       return (
         <td key={index} id={index} className="day day__blank"></td>
       );
     } else {
       return (
-        <td key={isoDate} id={isoDate} className="day">
+        <td key={today} id={today} className="day">
           <button
-          id={isoDate}
+          id={today}
           className={`day__button${daySelected || dayBetween ? ' day__button__selected' : ''}${dayNA ? ' day__button__na' : ''}${dayConflict ? ' day__button__conflict' : ''}`}
-          disabled={daySelected || dayNA} onClick={(e) => { this.props.handleSetDay(e.target.id) }}
+            disabled={daySelected || dayNA} onClick={(e) => { this.props.handleSetDay(e.target.id) }}
           >
-            {thisDay.getDate()}
+            {currentDate.getDate()}
           </button>
         </td>
       );

@@ -15,7 +15,7 @@ export default class Reservation extends React.Component {
       reviews : 0,
       bonus : 0,
       cleaningFee : 0,
-      stayLength : undefined,
+      stayLength : 0,
       minStay: undefined,
     };
   }

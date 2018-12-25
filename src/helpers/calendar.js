@@ -1,3 +1,4 @@
+export const ONE_DAY = 1000 * 60 * 60 * 24;
 export const round2Decimals = (num) => {
   return Math.round(num * 100 + Number.EPSILON) / 100;
 };

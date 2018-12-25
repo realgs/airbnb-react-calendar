@@ -1,5 +1,5 @@
 import React from 'react';
-import calendar, { THIS_YEAR, THIS_MONTH, MONTHS, getPreviousMonth, getNextMonth } from '../helpers/calendar';
+import { ONE_DAY, THIS_YEAR, THIS_MONTH, MONTHS, getPreviousMonth, getNextMonth } from '../helpers/calendar';
 import Month from './Month';
 import SubscriptInfo from './SubscriptInfo';
 import { unavailableDates } from '../data/unavailable';
@@ -9,12 +9,13 @@ export default class Calendar extends React.Component {
     super(props);
     this.goMonthBack = this.goMonthBack.bind(this);
     this.goMonthForward = this.goMonthForward.bind(this);
-    this.togglesetSecondDate = this.togglesetSecondDate.bind(this);
+    this.toggleSetSecondDate = this.toggleSetSecondDate.bind(this);
     this.chooseCheckIn = this.chooseCheckIn.bind(this);
     this.chooseCheckOut = this.chooseCheckOut.bind(this);
-    this.toggleReset = this.toggleReset.bind(this);
-    this.togglePickerVisibility = this.togglePickerVisibility.bind(this);
+    this.hidePicker = this.hidePicker.bind(this);
     this.handleSetDay = this.handleSetDay.bind(this);
+    this.setWrapperRef = this.setWrapperRef.bind(this);
+    this.handleClickOutside = this.handleClickOutside.bind(this);
     this.state = {
       today: new Date(),
       current: {
@@ -27,7 +28,6 @@ export default class Calendar extends React.Component {
       setSecondDate: false,
       unavailable: [],
       hidePicker: true,
-      reset: true,
       naDays: [],
     };
   }
@@ -36,22 +36,20 @@ export default class Calendar extends React.Component {
     this.setState({ today });
     try {
       if (unavailableDates) {
-        //console.log('Unavailable dates loaded.');
       }
     } catch (error) {
       console.log(`Error loading unavailable dates: ${e}`);
     }
+    document.addEventListener('mousedown', this.handleClickOutside);
   }
   componentDidUpdate(prevProps, prevState) {
+    document.getElementById("checkin").innerHTML = this.state.from ? this.state.from : 'Check In';
+    document.getElementById("checkout").innerHTML = this.state.to ? this.state.to : 'Check Out';
     if (this.state.from) {
-      document.getElementById("checkin").innerHTML = this.state.from;
       if (this.state.to) {
-        document.getElementById("checkout").innerHTML = this.state.to;
-        let fromDate = new Date(this.state.from);
-        let toDate = new Date(this.state.to);
-        if (fromDate > toDate) {
-          //console.log(`-----Switched days from: ${fromDate.toLocaleDateString()} --- ${toDate.toLocaleDateString()}`);
-          //console.log(`To: ${toDate.toLocaleDateString()} --- ${fromDate.toLocaleDateString()}`);
+        if (this.state.from > this.state.to) {
+          document.getElementById("checkin").innerHTML = this.state.to;
+          document.getElementById("checkout").innerHTML = this.state.from;
           this.setState({
             from: prevState.to ? prevState.to : this.state.to,
             to: prevState.from ? prevState.from : this.state.from
@@ -60,34 +58,52 @@ export default class Calendar extends React.Component {
       }
     }
   }
+  componentWillUnmount() {
+    document.removeEventListener('mousedown', this.handleClickOutside);
+  }
+
+  setWrapperRef(node) {
+    this.wrapperRef = node;
+  }
+
+  handleClickOutside(event) {
+    if (this.wrapperRef && !this.wrapperRef.contains(event.target)) {
+      !this.state.hidePicker && this.setState({ hidePicker: true });
+    }
+  }
 
   handleSetDay(day) {
-    if (this.state.reset) {
+    if (this.state.setSecondDate && this.canSet(day)) {
+      document.getElementById("checkout").innerHTML = day;
+      this.setState({
+        to: day,
+        lastModified: day,
+      });
+      const fromDate = new Date(this.state.from);
+      const toDate = new Date(day);
+      this.props.setStayLength(Math.round(Math.abs((fromDate.getTime() - toDate.getTime()) / ONE_DAY)));
+      this.toggleSetSecondDate();
+      this.hidePicker();
+    } else if (this.canSet(day)) {
       this.setState({
         from: day,
+        to: day < this.state.to ? this.state.to : null,
         lastModified: day,
-        to: null,
-        reset: false,
+        setSecondDate: true,
       });
-      this.toggleReset();
     } else {
-      if (this.canSet(day)) {
-        this.setState({ to: day, lastModified: day, reset: true });
-        const fromDate = new Date(this.state.from);
-        const toDate = new Date(day);
-        const oneDay = 1000 * 60 * 60 * 24;
-        this.props.setStayLength(Math.round(Math.abs((fromDate.getTime() - toDate.getTime()) / (oneDay))));
-        this.toggleReset();
-        this.togglePickerVisibility();
-      } else {
-        console.log('Sorry these days are unavailable.')
-      }
+      this.setState({
+        from: null,
+        to: null,
+        lastModified: null,
+        setSecondDate: false
+      });
     }
   }
   canSet(day) {
-    const minMax = [this.state.lastModified, day].sort();
+    const dates = [this.state.lastModified, day].sort();
     const naDays = unavailableDates.filter((d) => {
-      return d > minMax[0] && d < minMax[1];
+      return d > dates[0] && d < dates[1];
     });
     this.setState({ naDays });
     return !Array.isArray(naDays) || !naDays.length;
@@ -100,71 +116,71 @@ export default class Calendar extends React.Component {
     const newCurrent = getNextMonth(this.state.current.month, this.state.current.year);
     this.setState({ current: { month: newCurrent.month, year: newCurrent.year } });
   }
-  togglesetSecondDate(day) {
-    this.state.setSecondDate ? this.setState({ to: day }) : this.setState({ from: day });
+  toggleSetSecondDate(day) {
+    //this.state.setSecondDate ? this.setState({ to: day }) : this.setState({ from: day });
     this.setState({
       setSecondDate: !this.state.setSecondDate
     });
   }
-  toggleReset() {
-    this.setState({ reset: !this.state.reset });
+
+  showPicker() {
+    this.setState({ hidePicker: false });
   }
-  togglePickerVisibility() {
-    this.setState({ hidePicker: !this.state.hidePicker });
+  hidePicker() {
+    this.setState({ hidePicker: true });
   }
   chooseCheckIn() {
-    this.togglePickerVisibility();
+    this.showPicker();
+    this.setState({ setSecondDate: false });
+    document.getElementById("checkin").innerHTML = 'Check In';
 
   }
   chooseCheckOut() {
-    this.togglePickerVisibility();
+    this.showPicker();
+    this.setState({ setSecondDate: true });
+    document.getElementById("checkout").innerHTML = 'Check Out';
   }
   render() {
     return (
-        <div className="calendar">
-          <div className="calendar__header">
-            <span>Dates</span>
-            <div className="calendar__dates">
-              <button id="checkin" className="calendar__dates__checkin" onClick={this.chooseCheckIn}>
-                Check In
+      <div className="calendar" ref={this.setWrapperRef}>
+        <div className="calendar__header">
+          <span>Dates</span>
+          <div className="calendar__dates">
+            <button id="checkin" className="calendar__dates__checkin" onClick={this.chooseCheckIn}>
+              Check In
               </button>
-              <img src="./images/right-arrow.png" alt="date from - to separator" className="calendar__dates__separator"></img>
-              <button id="checkout" className="calendar__dates__checkout" onClick={this.chooseCheckOut}>
-                Check Out
+            <img src="./images/right-arrow.png" alt="date from - to separator" className="calendar__dates__separator"></img>
+            <button id="checkout" className="calendar__dates__checkout" onClick={this.chooseCheckOut}>
+              Check Out
               </button>
-            </div>
           </div>
-          <div className={`calendar__picker${this.state.hidePicker ? ' hidden' : ''}`}>
+        </div>
+        <div id="datePicker" className={`calendar__picker${this.state.hidePicker ? ' hidden' : ''}`}>
           <svg role="presentation" focusable="false" className="calendar__bubble">
             <path className="_whdw9f" d="M0,10 20,10 10,0z"></path>
             <path className="_c3dsty" d="M0,10 10,0 20,10"></path>
           </svg>
-            <div className="calendar__nav">
-              <button className="calendar__arrow__button" onClick={this.goMonthBack}>
-                <img src="./images/left-arrow.png" alt="previous month" className="calendar__arrow__left"></img>
-              </button>
-              <div>{`${MONTHS[this.state.current.month]} ${this.state.current.year}`}</div>
-              <button className="calendar__arrow__button" onClick={this.goMonthForward}>
-                <img src="./images/right-arrow.png" alt="next month" className="calendar__arrow__right"></img>
-              </button>
-            </div>
-            <Month
-              current={this.state.current}
-              from={this.state.from}
-              to={this.state.to}
-              setSecondDate={this.state.setSecondDate}
-              togglesetSecondDate={this.togglesetSecondDate}
-              unavailable={unavailableDates}
-              minStay={this.props.minStay}
-              togglePickerVisibility={this.togglePickerVisibility}
-              reset={this.state.reset}
-              toggleReset={this.toggleReset}
-              naDays={this.state.naDays}
-              handleSetDay={this.handleSetDay}
-            />
-            <SubscriptInfo lastupdate={2} />
+          <div className="calendar__nav">
+            <button className="calendar__arrow__button" onClick={this.goMonthBack}>
+              <img src="./images/left-arrow.png" alt="previous month" className="calendar__arrow__left"></img>
+            </button>
+            <div>{`${MONTHS[this.state.current.month]} ${this.state.current.year}`}</div>
+            <button className="calendar__arrow__button" onClick={this.goMonthForward}>
+              <img src="./images/right-arrow.png" alt="next month" className="calendar__arrow__right"></img>
+            </button>
           </div>
+          <Month
+            current={this.state.current}
+            from={this.state.from}
+            to={this.state.to}
+            unavailable={unavailableDates}
+            minStay={this.props.minStay}
+            naDays={this.state.naDays}
+            handleSetDay={this.handleSetDay}
+          />
+          <SubscriptInfo lastupdate={2} />
         </div>
+      </div>
     );
   }
 }
