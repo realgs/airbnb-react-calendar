@@ -1,4 +1,5 @@
 export const stayDetails = {
+  user: 'Matthew.Jings',
   price: 19.9,
   rating : 3.5,
   reviews : 123,
