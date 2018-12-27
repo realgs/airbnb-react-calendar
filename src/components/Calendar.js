@@ -50,6 +50,9 @@ export default class Calendar extends React.Component {
         if (this.state.from > this.state.to) {
           document.getElementById("checkin").innerHTML = this.state.to;
           document.getElementById("checkout").innerHTML = this.state.from;
+          const fromDate = new Date(this.state.to);
+          const toDate = new Date(this.state.from);
+          this.props.setStayLength(Math.round(Math.abs((fromDate.getTime() - toDate.getTime()) / ONE_DAY)));
           this.setState({
             from: prevState.to ? prevState.to : this.state.to,
             to: prevState.from ? prevState.from : this.state.from
