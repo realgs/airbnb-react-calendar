@@ -5,6 +5,6 @@ export const stayDetails = {
   reviews : 123,
   bonus : 10,
   cleaningFee : 10,
-  stayLength : 1,
+  stayLength : 0,
   minStay: 2,
 };
