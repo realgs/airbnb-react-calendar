@@ -19,7 +19,7 @@ $largeCellSize: calc( (#{$largeCalendarWidth} - 2 * #{$largeCalendarPadding}) / 
 $weekDaysHeight: calc( 0.7 * #{$cellSize});
 $weekDaysLargeHeight: calc( 0.7 * #{$largeCellSize});
 //Colors
-$lightgray: rgb(130, 136, 138);
+$lightgray: #d8d8d8;
 $grayText: rgb(216, 216, 216);
 $grayBorder: rgb(228, 231, 231);
 $grayArrow: rgb(196, 196, 196);
@@ -29,4 +29,4 @@ $selected: #01A599;
 $turquoise: #0D888D;
 $submit: #FF5A5F;
 $white: #fff;
-$darkGray: rgb(72, 72, 72);
+$darkGray: #484848;

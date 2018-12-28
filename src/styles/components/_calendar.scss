@@ -44,6 +44,13 @@
   border: none;
   outline: none;
   width: $dateInputWidth;
+  font-weight: 200;
+  color: $darkGray;
+}
+
+.calendar__dates__checkout {
+  //color: #484848;
+  font-weight: 400;
 }
 
 .calendar__dates__separator {

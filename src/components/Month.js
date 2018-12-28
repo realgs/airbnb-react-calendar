@@ -16,22 +16,24 @@ export default class Month extends React.Component {
 
   renderDay(day, index) {
     const currentDate = new Date(day);
-    const today = getDateISO(currentDate);
-    const dayNA = this.props.unavailable.indexOf(today) > -1;
-    const daySelected = this.props.from == today && this.props.setSecondDate || this.props.to == today && !this.props.setSecondDate ;
-    const dayBetween = this.props.from < today && this.props.to > today;
-    const dayConflict = this.props.naDays.indexOf(today) > -1;
+    const currentDay = getDateISO(currentDate);
+    const dayNA = this.props.unavailable.indexOf(currentDay) > -1 || currentDay < getDateISO(new Date());
+    //const daySelected = this.props.from == currentDay || this.props.to == currentDay;
+    const firstSelected = this.props.from == currentDay && !this.props.setSecondDate || this.props.to == currentDay && this.props.setSecondDate;
+    const secondSelected = this.props.from == currentDay && this.props.setSecondDate || this.props.to == currentDay && !this.props.setSecondDate;
+    const dayBetween = this.props.from < currentDay && this.props.to > currentDay;
+    const dayConflict = this.props.naDays.indexOf(currentDay) > -1;
     if (day[0] === 'indent' || day[0] === 'pad') {
       return (
         <td key={index} id={index} className="day day__blank"></td>
       );
     } else {
       return (
-        <td key={today} id={today} className="day">
+        <td key={currentDay} id={currentDay} className="day">
           <button
-          id={today}
-          className={`day__button${daySelected || dayBetween ? ' day__button__selected' : ''}${dayNA ? ' day__button__na' : ''}${dayConflict ? ' day__button__conflict' : ''}`}
-            disabled={daySelected || dayNA} onClick={(e) => { this.props.handleSetDay(e.target.id) }}
+          id={currentDay}
+          className={`day__button${firstSelected || secondSelected || dayBetween ? ' day__button__selected' : ''}${dayNA ? ' day__button__na' : ''}${dayConflict ? ' day__button__conflict' : ''}`}
+            disabled={secondSelected || dayNA} onClick={(e) => { this.props.handleSetDay(e.target.id) }}
           >
             {currentDate.getDate()}
           </button>
