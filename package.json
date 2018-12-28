@@ -3,6 +3,11 @@
   "version": "1.0.1",
   "main": "index.js",
   "author": "Matthew Magda",
+  "description": "A simple datepicker component created in airbnb style.",
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:realgs/airbnb-react-calendar.git"
+  },
   "license": "MIT",
   "scripts": {
     "serve": "live-server public/",

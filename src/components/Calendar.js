@@ -182,6 +182,7 @@ export default class Calendar extends React.Component {
             minStay={this.props.minStay}
             naDays={this.state.naDays}
             handleSetDay={this.handleSetDay}
+            setSecondDate={this.state.setSecondDate}
           />
           <SubscriptInfo lastupdate={2} />
         </div>

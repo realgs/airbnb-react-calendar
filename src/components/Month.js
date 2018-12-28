@@ -18,7 +18,7 @@ export default class Month extends React.Component {
     const currentDate = new Date(day);
     const today = getDateISO(currentDate);
     const dayNA = this.props.unavailable.indexOf(today) > -1;
-    const daySelected = this.props.from == today || this.props.to == today;
+    const daySelected = this.props.from == today && this.props.setSecondDate || this.props.to == today && !this.props.setSecondDate ;
     const dayBetween = this.props.from < today && this.props.to > today;
     const dayConflict = this.props.naDays.indexOf(today) > -1;
     if (day[0] === 'indent' || day[0] === 'pad') {
