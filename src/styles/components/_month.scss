@@ -31,6 +31,11 @@
   font-weight: 700;
 }
 
+.day__button__candidate {
+  background: $lightGray;
+  color: #fff;
+}
+
 .day__td__selected {
   border: 1px solid $selectedBorder;
 }
@@ -47,6 +52,14 @@
 .day__button__between {
   background: $between;
   color: #fff;
+}
+
+.day__button__between.day__button__candidate {
+  background: lighten($between, 10%);
+}
+
+.day__button__selected.day__button__candidate {
+  background: lighten($selected, 10%);
 }
 
 .day__button__na {

@@ -17,6 +17,8 @@ export default class Calendar extends React.Component {
     this.setWrapperRef = this.setWrapperRef.bind(this);
     this.handleClickOutside = this.handleClickOutside.bind(this);
     this.clearDates = this.clearDates.bind(this);
+    this.handleSetDayHover = this.handleSetDayHover.bind(this);
+    this.handleUnsetDayHover = this.handleUnsetDayHover.bind(this);
     this.state = {
       today: new Date(),
       current: {
@@ -30,6 +32,7 @@ export default class Calendar extends React.Component {
       unavailable: [],
       hidePicker: true,
       naDays: [],
+      candidate: null,
     };
   }
   componentDidMount() {
@@ -80,6 +83,7 @@ export default class Calendar extends React.Component {
       this.setState({
         to: day,
         lastModified: day,
+        candidate: null,
       });
       this.state.from && this.updateStayLength(this.state.from, day);
       this.toggleSetSecondDate();
@@ -97,10 +101,28 @@ export default class Calendar extends React.Component {
         from: null,
         to: null,
         lastModified: null,
-        setSecondDate: false
+        setSecondDate: false,
       });
     }
   }
+
+  handleSetDayHover(day) {
+    // if (this.state.setSecondDate && this.canSet(day)) {
+    //   document.getElementById("checkout").innerHTML = day;
+    //   this.setState({
+    //     to: day,
+    //     lastModified: day,
+    //   });
+    //   this.state.from && this.updateStayLength(this.state.from, day);
+      ////this.state.from && this.hidePicker();
+    //}
+    this.setState({ candidate: day });
+  }
+
+  handleUnsetDayHover(day) {
+    this.setState({ candidate: null });
+  }
+
   canSet(day) {
     const dates = [this.state.lastModified, day].sort();
     const naDays = unavailableDates.filter((d) => {
@@ -198,6 +220,9 @@ export default class Calendar extends React.Component {
             naDays={this.state.naDays}
             handleSetDay={this.handleSetDay}
             setSecondDate={this.state.setSecondDate}
+            handleSetDayHover={this.handleSetDayHover}
+            handleUnsetDayHover={this.handleUnsetDayHover}
+            candidate={this.state.candidate}
           />
           <SubscriptInfo
             lastupdate={2}

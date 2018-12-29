@@ -23,6 +23,7 @@ export default class Month extends React.Component {
     const daySelected = firstSelected || secondSelected;
     const dayBetween = this.props.from < currentDay && this.props.to > currentDay;
     const dayConflict = this.props.naDays.indexOf(currentDay) > -1;
+    const isCandidate = currentDay == this.props.candidate;
     if (day[0] === 'indent' || day[0] === 'pad') {
       return (
         <td key={index} id={index} className="day day__blank"></td>
@@ -32,8 +33,11 @@ export default class Month extends React.Component {
         <td key={currentDay} id={currentDay} className={`day${ dayBetween ? ' day__td__between' : ''}${daySelected ? ' day__td__selected':''}`}>
           <button
           id={currentDay}
-          className={`day__button${ daySelected ? ' day__button__selected' : ''}${dayNA ? ' day__button__na' : ''}${dayConflict ? ' day__button__conflict' : ''}${ dayBetween ? ' day__button__between' : ''}`}
-            disabled={secondSelected || dayNA} onClick={(e) => { this.props.handleSetDay(e.target.id) }}
+            className={`day__button${daySelected ? ' day__button__selected' : ''}${dayNA ? ' day__button__na' : ''}${dayConflict ? ' day__button__conflict' : ''}${dayBetween ? ' day__button__between' : ''}${ isCandidate ? ' day__button__candidate' : ''}`}
+            disabled={secondSelected || dayNA}
+            onClick={(e) => { this.props.handleSetDay(e.target.id) }}
+            onMouseOver={(e) => { this.props.handleSetDayHover(e.target.id) }} //this.props.from &&
+            onMouseOut={(e) => { this.props.handleUnsetDayHover(e.target.id) }}
           >
             {currentDate.getDate()}
           </button>
