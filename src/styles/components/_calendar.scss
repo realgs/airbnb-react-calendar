@@ -46,6 +46,12 @@
   width: $dateInputWidth;
   font-weight: 200;
   color: $darkGray;
+  border-radius: $xxxs-size;
+  padding: $xxs-size;
+}
+
+.calendar__dates__active {
+  background: $activeDate;
 }
 
 .calendar__dates__checkout {

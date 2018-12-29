@@ -69,7 +69,7 @@ export default class Calendar extends React.Component {
 
   handleClickOutside(event) {
     if (this.wrapperRef && !this.wrapperRef.contains(event.target)) {
-      !this.state.hidePicker && this.setState({ hidePicker: true });
+      !this.state.hidePicker && this.hidePicker();
     }
   }
 
@@ -82,7 +82,7 @@ export default class Calendar extends React.Component {
       });
       this.state.from && this.updateStayLength(this.state.from, day);
       this.toggleSetSecondDate();
-      this.hidePicker();
+      this.state.from && this.hidePicker();
     } else if (this.canSet(day)) {
       this.state.to && this.updateStayLength(day, this.state.to);
       this.setState({
@@ -132,17 +132,23 @@ export default class Calendar extends React.Component {
     this.setState({ hidePicker: false });
   }
   hidePicker() {
-    this.setState({ hidePicker: true });
+    this.setState({
+      hidePicker: true,
+    });
   }
   chooseCheckIn() {
     this.showPicker();
-    this.setState({ setSecondDate: false });
+    this.setState({
+      setSecondDate: false,
+    });
     document.getElementById("checkin").innerHTML = 'Check In';
 
   }
   chooseCheckOut() {
     this.showPicker();
-    this.setState({ setSecondDate: true });
+    this.setState({
+      setSecondDate: true,
+    });
     document.getElementById("checkout").innerHTML = 'Check Out';
   }
   render() {
@@ -151,11 +157,11 @@ export default class Calendar extends React.Component {
         <div className="calendar__header">
           <span>Dates</span>
           <div className="calendar__dates">
-            <button id="checkin" className="calendar__dates__checkin" onClick={this.chooseCheckIn}>
+            <button id="checkin" className={`calendar__dates__checkin${ !this.state.hidePicker && !this.state.setSecondDate ? ' calendar__dates__active' : ''}`} onClick={this.chooseCheckIn}>
               Check In
               </button>
             <img src="./images/right-arrow.png" alt="date from - to separator" className="calendar__dates__separator"></img>
-            <button id="checkout" className="calendar__dates__checkout" onClick={this.chooseCheckOut}>
+            <button id="checkout" className={`calendar__dates__checkout${!this.state.hidePicker && this.state.setSecondDate ? ' calendar__dates__active' : ''}`} onClick={this.chooseCheckOut}>
               Check Out
               </button>
           </div>

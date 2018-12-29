@@ -19,7 +19,7 @@ $largeCellSize: calc( (#{$largeCalendarWidth} - 2 * #{$largeCalendarPadding}) / 
 $weekDaysHeight: calc( 0.7 * #{$cellSize});
 $weekDaysLargeHeight: calc( 0.7 * #{$largeCellSize});
 //Colors
-$lightgray: #d8d8d8;
+$lightGray: #d8d8d8;
 $grayText: rgb(216, 216, 216);
 $grayBorder: rgb(228, 231, 231);
 $grayArrow: rgb(196, 196, 196);
@@ -30,6 +30,7 @@ $selectedBorder: rgb(0, 166, 153);
 $between: rgb(102, 226, 218);
 $betweenBorder: rgb(51, 218, 205);
 $turquoise: #0D888D;
+$activeDate: rgb(153, 237, 230);
 $submit: #FF5A5F;
 $white: #fff;
 $darkGray: #484848;
