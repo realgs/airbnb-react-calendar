@@ -18,9 +18,9 @@ export default class Month extends React.Component {
     const currentDate = new Date(day);
     const currentDay = getDateISO(currentDate);
     const dayNA = this.props.unavailable.indexOf(currentDay) > -1 || currentDay < getDateISO(new Date());
-    //const daySelected = this.props.from == currentDay || this.props.to == currentDay;
     const firstSelected = this.props.from == currentDay && !this.props.setSecondDate || this.props.to == currentDay && this.props.setSecondDate;
     const secondSelected = this.props.from == currentDay && this.props.setSecondDate || this.props.to == currentDay && !this.props.setSecondDate;
+    const daySelected = firstSelected || secondSelected;
     const dayBetween = this.props.from < currentDay && this.props.to > currentDay;
     const dayConflict = this.props.naDays.indexOf(currentDay) > -1;
     if (day[0] === 'indent' || day[0] === 'pad') {
@@ -29,10 +29,10 @@ export default class Month extends React.Component {
       );
     } else {
       return (
-        <td key={currentDay} id={currentDay} className="day">
+        <td key={currentDay} id={currentDay} className={`day${ dayBetween ? ' day__td__between' : ''}${daySelected ? ' day__td__selected':''}`}>
           <button
           id={currentDay}
-          className={`day__button${firstSelected || secondSelected || dayBetween ? ' day__button__selected' : ''}${dayNA ? ' day__button__na' : ''}${dayConflict ? ' day__button__conflict' : ''}`}
+          className={`day__button${ daySelected ? ' day__button__selected' : ''}${dayNA ? ' day__button__na' : ''}${dayConflict ? ' day__button__conflict' : ''}${ dayBetween ? ' day__button__between' : ''}`}
             disabled={secondSelected || dayNA} onClick={(e) => { this.props.handleSetDay(e.target.id) }}
           >
             {currentDate.getDate()}

@@ -31,8 +31,22 @@
   font-weight: 700;
 }
 
+.day__td__selected {
+  border: 1px solid $selectedBorder;
+}
+
 .day__button__selected {
   background: $selected;
+  color: #fff;
+}
+
+.day__td__between {
+  border: 1px solid $betweenBorder;
+}
+
+.day__button__between {
+  background: $between;
+  color: #fff;
 }
 
 .day__button__na {
