@@ -54,9 +54,8 @@
   background: $activeDate;
 }
 
-.calendar__dates__checkout {
-  //color: #484848;
-  font-weight: 400;
+.calendar__dates__unassigned {
+  color: $unassignedDate;
 }
 
 .calendar__dates__separator {
@@ -90,6 +89,10 @@
   padding: 0;
   height: $ml-size;
   width: $l-size;
+}
+
+.calendar__arrow__button:hover {
+  border: 1px solid $gray;
 }
 
 .calendar__arrow__left {

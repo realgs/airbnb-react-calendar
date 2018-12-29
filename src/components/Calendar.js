@@ -16,6 +16,7 @@ export default class Calendar extends React.Component {
     this.handleSetDay = this.handleSetDay.bind(this);
     this.setWrapperRef = this.setWrapperRef.bind(this);
     this.handleClickOutside = this.handleClickOutside.bind(this);
+    this.clearDates = this.clearDates.bind(this);
     this.state = {
       today: new Date(),
       current: {
@@ -136,6 +137,14 @@ export default class Calendar extends React.Component {
       hidePicker: true,
     });
   }
+  clearDates() {
+    this.setState({
+      from: null,
+      to: null,
+      lastModified: null,
+      setSecondDate: false,
+    });
+  }
   chooseCheckIn() {
     this.showPicker();
     this.setState({
@@ -157,11 +166,11 @@ export default class Calendar extends React.Component {
         <div className="calendar__header">
           <span>Dates</span>
           <div className="calendar__dates">
-            <button id="checkin" className={`calendar__dates__checkin${ !this.state.hidePicker && !this.state.setSecondDate ? ' calendar__dates__active' : ''}`} onClick={this.chooseCheckIn}>
+            <button id="checkin" className={`calendar__dates__checkin${!this.state.hidePicker && !this.state.setSecondDate ? ' calendar__dates__active' : ''}${ !this.state.from ? ' calendar__dates__unassigned' : ''}`} onClick={this.chooseCheckIn}>
               Check In
               </button>
             <img src="./images/right-arrow.png" alt="date from - to separator" className="calendar__dates__separator"></img>
-            <button id="checkout" className={`calendar__dates__checkout${!this.state.hidePicker && this.state.setSecondDate ? ' calendar__dates__active' : ''}`} onClick={this.chooseCheckOut}>
+            <button id="checkout" className={`calendar__dates__checkout${!this.state.hidePicker && this.state.setSecondDate ? ' calendar__dates__active' : ''}${ !this.state.to ? ' calendar__dates__unassigned' : ''}`} onClick={this.chooseCheckOut}>
               Check Out
               </button>
           </div>
@@ -190,7 +199,11 @@ export default class Calendar extends React.Component {
             handleSetDay={this.handleSetDay}
             setSecondDate={this.state.setSecondDate}
           />
-          <SubscriptInfo lastupdate={2} />
+          <SubscriptInfo
+            lastupdate={2}
+            lastModified={this.state.lastModified}
+            clearDates={this.clearDates}
+          />
         </div>
       </div>
     );

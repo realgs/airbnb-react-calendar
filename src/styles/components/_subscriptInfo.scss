@@ -4,3 +4,15 @@
   flex-direction: column;
   padding-top: $m-size;
 }
+
+.subscript__clearDates {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.subscript__clearDates__button {
+  color: #a61d55;
+  border: none;
+  font-weight: 400;
+  outline: none;
+}
