@@ -46,15 +46,19 @@ export default class Reservation extends React.Component {
 
   handleReservation() {
     if (this.state.user){
-      const reservation = {
-        user: this.state.user,
-        amount: this.state.amount,
-        serviceFee: this.state.serviceFee,
-        total: this.state.total,
-        stayLength: this.state.stayLength,
-        discount: this.state.total > 0 ? this.state.bonus : 0
-      };
-      console.log(reservation);
+      if (this.state.stayLength != 0) {
+        const reservation = {
+          user: this.state.user,
+          amount: this.state.amount,
+          serviceFee: this.state.serviceFee,
+          total: this.state.total,
+          stayLength: this.state.stayLength,
+          discount: this.state.total > 0 ? this.state.bonus : 0
+        };
+        console.log(reservation);
+      } else {
+
+      }
     }
   }
   render(){

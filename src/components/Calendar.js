@@ -97,12 +97,7 @@ export default class Calendar extends React.Component {
         setSecondDate: true,
       });
     } else {
-      this.setState({
-        from: null,
-        to: null,
-        lastModified: null,
-        setSecondDate: false,
-      });
+      this.clearDates();
     }
   }
 
@@ -145,7 +140,6 @@ export default class Calendar extends React.Component {
     this.setState({ current: { month: newCurrent.month, year: newCurrent.year } });
   }
   toggleSetSecondDate(day) {
-    //this.state.setSecondDate ? this.setState({ to: day }) : this.setState({ from: day });
     this.setState({
       setSecondDate: !this.state.setSecondDate
     });
@@ -166,6 +160,7 @@ export default class Calendar extends React.Component {
       lastModified: null,
       setSecondDate: false,
     });
+    this.props.setStayLength(0);
   }
   chooseCheckIn() {
     this.showPicker();
