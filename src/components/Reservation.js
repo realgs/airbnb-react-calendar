@@ -10,6 +10,7 @@ export default class Reservation extends React.Component {
     super(props);
     this.setStayLength = this.setStayLength.bind(this);
     this.handleReservation = this.handleReservation.bind(this);
+    this.dateNotMissing = this.dateNotMissing.bind(this);
     this.state ={
       user: undefined,
       price: 0,
@@ -26,6 +27,7 @@ export default class Reservation extends React.Component {
       amount: 0,
       serviceFee: 0,
       total: 0,
+      dateMissing: false,
     };
   }
   componentDidMount(){
@@ -53,14 +55,19 @@ export default class Reservation extends React.Component {
           serviceFee: this.state.serviceFee,
           total: this.state.total,
           stayLength: this.state.stayLength,
-          discount: this.state.total > 0 ? this.state.bonus : 0
+          discount: this.state.total > 0 ? this.state.bonus : 0,
         };
         console.log(reservation);
       } else {
-
+        this.setState({ dateMissing : true });
       }
     }
   }
+
+  dateNotMissing() {
+    this.setState({ dateMissing: false });
+  }
+
   render(){
     return (
       <div className="wrapper">
@@ -73,6 +80,8 @@ export default class Reservation extends React.Component {
         <Calendar
           minStay={this.state.minStay}
           setStayLength={this.setStayLength}
+          dateMissing={this.state.dateMissing}
+          dateNotMissing={this.dateNotMissing}
         />
         <Costs
           price={this.state.price}

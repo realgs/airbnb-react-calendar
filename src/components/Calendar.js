@@ -60,6 +60,16 @@ export default class Calendar extends React.Component {
             to: prevState.from ? prevState.from : this.state.from
           });
         }
+      } else {
+        if (this.props.dateMissing) {
+          this.showPicker();
+          this.props.dateNotMissing();
+        }
+      }
+    } else {
+      if (this.props.dateMissing) {
+        this.showPicker();
+        this.props.dateNotMissing();
       }
     }
   }
@@ -168,7 +178,6 @@ export default class Calendar extends React.Component {
       setSecondDate: false,
     });
     document.getElementById("checkin").innerHTML = 'Check In';
-
   }
   chooseCheckOut() {
     this.showPicker();
