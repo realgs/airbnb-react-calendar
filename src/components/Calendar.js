@@ -229,7 +229,7 @@ export default class Calendar extends React.Component {
             candidate={this.state.candidate}
           />
           <SubscriptInfo
-            lastupdate={2}
+            lastUpdate={2}
             lastModified={this.state.lastModified}
             clearDates={this.clearDates}
           />

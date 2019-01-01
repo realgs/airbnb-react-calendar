@@ -1,0 +1,41 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Should render SubscriptInfo with no data provided 1`] = `
+<div
+  className="subscript"
+>
+  <span
+    className="subscript__info"
+  >
+    Minimum stay varies
+  </span>
+</div>
+`;
+
+exports[`Should render info & last update in SubscriptInfo correctly 1`] = `
+<div
+  className="subscript"
+>
+  <span
+    className="subscript__info"
+  >
+    Minimum stay varies
+  </span>
+  <span
+    className="subscript__update"
+  >
+    Updated 
+    2
+     days ago
+  </span>
+  <div
+    className="subscript__clearDates"
+  >
+    <button
+      className="subscript__clearDates__button"
+    >
+      Clear dates
+    </button>
+  </div>
+</div>
+`;
