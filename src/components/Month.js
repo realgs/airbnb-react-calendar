@@ -17,12 +17,12 @@ export default class Month extends React.Component {
   renderDay(day, index) {
     const currentDate = new Date(day);
     const currentDay = getDateISO(currentDate);
-    const dayNA = this.props.unavailable.indexOf(currentDay) > -1 || currentDay < getDateISO(new Date());
+    const dayNA = this.props.unavailable && this.props.unavailable.indexOf(currentDay) > -1 || currentDay < getDateISO(new Date());
     const firstSelected = this.props.from == currentDay && !this.props.setSecondDate || this.props.to == currentDay && this.props.setSecondDate;
     const secondSelected = this.props.from == currentDay && this.props.setSecondDate || this.props.to == currentDay && !this.props.setSecondDate;
     const daySelected = firstSelected || secondSelected;
     const dayBetween = this.props.from < currentDay && this.props.to > currentDay;
-    const dayConflict = this.props.naDays.indexOf(currentDay) > -1;
+    const dayConflict = this.props.naDays && this.props.naDays.indexOf(currentDay) > -1;
     const isCandidate = currentDay == this.props.candidate;
     if (day[0] === 'indent' || day[0] === 'pad') {
       return (
@@ -36,8 +36,8 @@ export default class Month extends React.Component {
             className={`day__button${daySelected ? ' day__button__selected' : ''}${dayNA ? ' day__button__na' : ''}${dayConflict ? ' day__button__conflict' : ''}${dayBetween ? ' day__button__between' : ''}${ isCandidate ? ' day__button__candidate' : ''}`}
             disabled={secondSelected || dayNA}
             onClick={(e) => { this.props.handleSetDay(e.target.id) }}
-            onMouseOver={(e) => { this.props.handleSetDayHover(e.target.id) }} //this.props.from &&
-            onMouseOut={(e) => { this.props.handleUnsetDayHover(e.target.id) }}
+            onMouseOver={(e) => { this.props.handleSetCandidate(e.target.id) }}
+            onMouseOut={(e) => { this.props.handleDeleteCandidate(e.target.id) }}
           >
             {currentDate.getDate()}
           </button>

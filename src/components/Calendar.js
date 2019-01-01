@@ -17,8 +17,8 @@ export default class Calendar extends React.Component {
     this.setWrapperRef = this.setWrapperRef.bind(this);
     this.handleClickOutside = this.handleClickOutside.bind(this);
     this.clearDates = this.clearDates.bind(this);
-    this.handleSetDayHover = this.handleSetDayHover.bind(this);
-    this.handleUnsetDayHover = this.handleUnsetDayHover.bind(this);
+    this.handleSetCandidate = this.handleSetCandidate.bind(this);
+    this.handleDeleteCandidate = this.handleDeleteCandidate.bind(this);
     this.state = {
       today: new Date(),
       current: {
@@ -46,7 +46,7 @@ export default class Calendar extends React.Component {
     }
     document.addEventListener('mousedown', this.handleClickOutside);
   }
-  componentDidUpdate(prevProps, prevState) {
+  componentDidUpdate(prevState) {
     this.setCheckin(this.state.from ? this.state.from : 'Check In');
     this.setCheckout(this.state.to ? this.state.to : 'Check Out');
     if (this.state.from) {
@@ -111,11 +111,11 @@ export default class Calendar extends React.Component {
     }
   }
 
-  handleSetDayHover(day) {
+  handleSetCandidate(day) {
     this.setState({ candidate: day });
   }
 
-  handleUnsetDayHover(day) {
+  handleDeleteCandidate(day) {
     this.setState({ candidate: null });
   }
 
@@ -227,8 +227,8 @@ export default class Calendar extends React.Component {
             naDays={this.state.naDays}
             handleSetDay={this.handleSetDay}
             setSecondDate={this.state.setSecondDate}
-            handleSetDayHover={this.handleSetDayHover}
-            handleUnsetDayHover={this.handleUnsetDayHover}
+            handleSetCandidate={this.handleSetCandidate}
+            handleDeleteCandidate={this.handleDeleteCandidate}
             candidate={this.state.candidate}
           />
           <SubscriptInfo

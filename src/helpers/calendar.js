@@ -49,7 +49,6 @@ export const thisMonthDates = (month = THIS_MONTH, year = THIS_YEAR) => {
     monthDatesDivided.push(monthDates.slice(i, i + 7));
   return monthDatesDivided;
 };
-//console.log(thisMonthDates(0, 2019));
 
 // (bool) Checks if a value is a date
 export const isDate = date => {

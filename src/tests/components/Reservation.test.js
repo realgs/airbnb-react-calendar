@@ -1,7 +1,6 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 import Reservation from '../../components/Reservation';
-import { isNullOrUndefined } from 'util';
 
 test('Should render with datepicker hidden by default.', () => {
   const wrapper = shallow(<Reservation />);
@@ -13,7 +12,7 @@ test('Should render with datepicker hidden by default.', () => {
   expect(calendarWrapper.state('hidePicker')).toBe(true);
 });
 
-test('Should ask for dates of reservation after submit with no data provided.', () => {
+test('Should ask for dates of reservation after submitting with no data provided.', () => {
   const wrapper = shallow(<Reservation />);
   expect(wrapper).toMatchSnapshot();
   wrapper.find('.button__reservation').simulate('click', {
@@ -65,4 +64,14 @@ test('Should set stay length correctly for undefined.', () => {
   const wrapper = shallow(<Reservation />);
   wrapper.find('Calendar').prop('setStayLength')(stayLength);
   expect(wrapper.state('stayLength')).toEqual(0);
+});
+
+test('dateNotMissing() should toggle dateMissing back to false', () => {
+  const wrapper = shallow(<Reservation />);
+  wrapper.find('.button__reservation').simulate('click', {
+    preventDefault: () => { }
+  });
+  expect(wrapper.state('dateMissing')).toBe(true);
+  wrapper.find('Calendar').prop('dateNotMissing')();
+  expect(wrapper.state('dateMissing')).toBe(false);
 });

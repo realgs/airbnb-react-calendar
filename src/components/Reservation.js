@@ -85,9 +85,9 @@ export default class Reservation extends React.Component {
         />
         <Calendar
           minStay={this.state.minStay}
-          setStayLength={this.setStayLength}
           dateMissing={this.state.dateMissing}
           dateNotMissing={this.dateNotMissing}
+          setStayLength={this.setStayLength}
         />
         <Costs
           price={this.state.price}

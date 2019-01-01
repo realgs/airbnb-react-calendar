@@ -1,41 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Should ask for dates of reservation after submitting with no data provided. 1`] = `
-<div
-  className="wrapper"
->
-  <Header
-    currency="$"
-    price={19.9}
-    rating={3.5}
-    reviews={123}
-  />
-  <Calendar
-    dateMissing={false}
-    dateNotMissing={[Function]}
-    minStay={2}
-    setStayLength={[Function]}
-  />
-  <Costs
-    amount={0}
-    bonus={10}
-    cleaningFee={10}
-    currency="$"
-    price={19.9}
-    serviceFee={0}
-    stayLength={0}
-    total={0}
-  />
-  <button
-    className="button__reservation"
-    onClick={[Function]}
-  >
-    Request to Book
-  </button>
-</div>
-`;
-
-exports[`Should ask for dates of reservation after submitting with no data provided. 2`] = `
+exports[`Should match Calendar snapshot. 1`] = `
 <div
   className="calendar"
 >
@@ -126,7 +91,6 @@ exports[`Should ask for dates of reservation after submitting with no data provi
       handleDeleteCandidate={[Function]}
       handleSetCandidate={[Function]}
       handleSetDay={[Function]}
-      minStay={2}
       naDays={Array []}
       setSecondDate={false}
       to={null}
@@ -165,75 +129,5 @@ exports[`Should ask for dates of reservation after submitting with no data provi
       lastUpdate={2}
     />
   </div>
-</div>
-`;
-
-exports[`Should ask for dates of reservation after submitting with no data provided. 3`] = `
-<div
-  className="wrapper"
->
-  <Header
-    currency="$"
-    price={19.9}
-    rating={3.5}
-    reviews={123}
-  />
-  <Calendar
-    dateMissing={true}
-    dateNotMissing={[Function]}
-    minStay={2}
-    setStayLength={[Function]}
-  />
-  <Costs
-    amount={0}
-    bonus={10}
-    cleaningFee={10}
-    currency="$"
-    price={19.9}
-    serviceFee={0}
-    stayLength={0}
-    total={0}
-  />
-  <button
-    className="button__reservation"
-    onClick={[Function]}
-  >
-    Request to Book
-  </button>
-</div>
-`;
-
-exports[`Should render with datepicker hidden by default. 1`] = `
-<div
-  className="wrapper"
->
-  <Header
-    currency="$"
-    price={19.9}
-    rating={3.5}
-    reviews={123}
-  />
-  <Calendar
-    dateMissing={false}
-    dateNotMissing={[Function]}
-    minStay={2}
-    setStayLength={[Function]}
-  />
-  <Costs
-    amount={0}
-    bonus={10}
-    cleaningFee={10}
-    currency="$"
-    price={19.9}
-    serviceFee={0}
-    stayLength={0}
-    total={0}
-  />
-  <button
-    className="button__reservation"
-    onClick={[Function]}
-  >
-    Request to Book
-  </button>
 </div>
 `;
