@@ -108,6 +108,11 @@ export default class Calendar extends React.Component {
       });
     } else {
       this.clearDates();
+      this.setState({
+        from: day,
+        lastModified: day,
+        setSecondDate: true,
+      });
     }
   }
 

@@ -308,8 +308,8 @@ exports[`Should match Month snapshot. 1`] = `
           key="2019-01-15"
         >
           <button
-            className="day__button day__button__na"
-            disabled={true}
+            className="day__button"
+            disabled={false}
             id="2019-01-15"
             onClick={[Function]}
             onMouseOut={[Function]}
@@ -324,8 +324,8 @@ exports[`Should match Month snapshot. 1`] = `
           key="2019-01-16"
         >
           <button
-            className="day__button day__button__na"
-            disabled={true}
+            className="day__button"
+            disabled={false}
             id="2019-01-16"
             onClick={[Function]}
             onMouseOut={[Function]}
@@ -340,8 +340,8 @@ exports[`Should match Month snapshot. 1`] = `
           key="2019-01-17"
         >
           <button
-            className="day__button day__button__na"
-            disabled={true}
+            className="day__button"
+            disabled={false}
             id="2019-01-17"
             onClick={[Function]}
             onMouseOut={[Function]}
