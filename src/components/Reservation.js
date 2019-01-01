@@ -30,6 +30,7 @@ export default class Reservation extends React.Component {
       dateMissing: false,
     };
   }
+
   componentDidMount(){
     this.setState({
       ...stayDetails
@@ -38,12 +39,17 @@ export default class Reservation extends React.Component {
   componentDidUpdate(){
   }
 
-  setStayLength (stayLength) {
-    this.setState({ stayLength });
+  setStayLength (newStayLength) {
+    const stayLength = newStayLength ? Math.abs(newStayLength) : 0;
     const amount = round2Decimals(this.state.price * stayLength);
     const serviceFee = round2Decimals(this.state.price * stayLength * 0.1);
     const total = round2Decimals(amount + this.state.cleaningFee + serviceFee - this.state.bonus);
-    this.setState({ amount, serviceFee, total });
+    this.setState({
+      stayLength,
+      amount,
+      serviceFee,
+      total
+    });
   }
 
   handleReservation() {

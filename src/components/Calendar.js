@@ -47,13 +47,13 @@ export default class Calendar extends React.Component {
     document.addEventListener('mousedown', this.handleClickOutside);
   }
   componentDidUpdate(prevProps, prevState) {
-    document.getElementById("checkin").innerHTML = this.state.from ? this.state.from : 'Check In';
-    document.getElementById("checkout").innerHTML = this.state.to ? this.state.to : 'Check Out';
+    this.setCheckin(this.state.from ? this.state.from : 'Check In');
+    this.setCheckout(this.state.to ? this.state.to : 'Check Out');
     if (this.state.from) {
       if (this.state.to) {
         if (this.state.from > this.state.to) {
-          document.getElementById("checkin").innerHTML = this.state.to;
-          document.getElementById("checkout").innerHTML = this.state.from;
+          this.setCheckin(this.state.to);
+          this.setCheckout(this.state.from);
           this.updateStayLength(this.state.to, this.state.from);
           this.setState({
             from: prevState.to ? prevState.to : this.state.to,
@@ -89,7 +89,7 @@ export default class Calendar extends React.Component {
 
   handleSetDay(day) {
     if (this.state.setSecondDate && this.canSet(day)) {
-      document.getElementById("checkout").innerHTML = day;
+      this.setCheckout(day);
       this.setState({
         to: day,
         lastModified: day,
@@ -112,15 +112,6 @@ export default class Calendar extends React.Component {
   }
 
   handleSetDayHover(day) {
-    // if (this.state.setSecondDate && this.canSet(day)) {
-    //   document.getElementById("checkout").innerHTML = day;
-    //   this.setState({
-    //     to: day,
-    //     lastModified: day,
-    //   });
-    //   this.state.from && this.updateStayLength(this.state.from, day);
-      ////this.state.from && this.hidePicker();
-    //}
     this.setState({ candidate: day });
   }
 
@@ -177,14 +168,26 @@ export default class Calendar extends React.Component {
     this.setState({
       setSecondDate: false,
     });
-    document.getElementById("checkin").innerHTML = 'Check In';
+    this.setCheckin('Check In');
   }
   chooseCheckOut() {
     this.showPicker();
     this.setState({
       setSecondDate: true,
     });
-    document.getElementById("checkout").innerHTML = 'Check Out';
+    this.setCheckout('Check Out');
+  }
+  setCheckin(value) {
+    const elem = document.getElementById("checkin");
+    if(elem) {
+      elem.innerHTML = value;
+    }
+  }
+  setCheckout(value) {
+    const elem = document.getElementById("checkout");
+    if (elem) {
+      elem.innerHTML = value;
+    }
   }
   render() {
     return (
