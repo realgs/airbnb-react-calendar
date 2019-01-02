@@ -6,16 +6,16 @@ const Header = ({ price, currency, rating, reviews }) => {
   const blankStars = 5 - fullStars - halfStars;
 
   const renderFullStars = (number) => {
-    return typeof number === 'number' && number > 0 ? [... new Array(number)].map((elem, index)=>{
+    return typeof number === 'number' && number > 0 ? [... new Array(number)].map((elem, index) => {
       return <img src="./images/star.png" key={`star${index}`} className="header__rating__star"></img>;
     })
-    :'';
+      : '';
   };
   const renderHalfStar = (number) => {
     return typeof number === 'number' && number > 0 ? <img src="./images/halfStar.png" key="halfStar" className="header__rating__halfStar"></img> : '';
   };
   const renderBlankStars = (number) => {
-    return typeof number === 'number' && number > 0 ?  [... new Array(number)].map((elem, index) => {
+    return typeof number === 'number' && number > 0 ? [... new Array(number)].map((elem, index) => {
       return <img src="./images/blankStar.png" key={`blankStar${index}`} className="header__rating__blankStar"></img>;
     })
       : '';
@@ -42,4 +42,5 @@ const Header = ({ price, currency, rating, reviews }) => {
     </div>
   );
 };
+
 export default Header;

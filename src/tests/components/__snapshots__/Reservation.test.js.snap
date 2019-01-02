@@ -126,7 +126,6 @@ exports[`Should ask for dates of reservation after submitting with no data provi
       handleDeleteCandidate={[Function]}
       handleSetCandidate={[Function]}
       handleSetDay={[Function]}
-      minStay={2}
       naDays={Array []}
       setSecondDate={false}
       to={null}

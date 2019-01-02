@@ -35,6 +35,7 @@ export default class Calendar extends React.Component {
       candidate: null,
     };
   }
+
   componentDidMount() {
     const today = new Date().setHours(0, 0, 0, 0);
     this.setState({ today });
@@ -46,6 +47,7 @@ export default class Calendar extends React.Component {
     }
     document.addEventListener('mousedown', this.handleClickOutside);
   }
+
   componentDidUpdate(prevState) {
     this.setCheckin(this.state.from ? this.state.from : 'Check In');
     this.setCheckout(this.state.to ? this.state.to : 'Check Out');
@@ -73,6 +75,7 @@ export default class Calendar extends React.Component {
       }
     }
   }
+
   componentWillUnmount() {
     document.removeEventListener('mousedown', this.handleClickOutside);
   }
@@ -132,19 +135,23 @@ export default class Calendar extends React.Component {
     this.setState({ naDays });
     return !Array.isArray(naDays) || !naDays.length;
   }
+
   updateStayLength(from, to) {
     const fromDate = new Date(from);
     const toDate = new Date(to);
     this.props.setStayLength(Math.round(Math.abs((fromDate.getTime() - toDate.getTime()) / ONE_DAY)));
   }
+
   goMonthBack() {
     const newCurrent = getPreviousMonth(this.state.current.month, this.state.current.year);
     this.setState({ current: { month: newCurrent.month, year: newCurrent.year } });
   }
+
   goMonthForward() {
     const newCurrent = getNextMonth(this.state.current.month, this.state.current.year);
     this.setState({ current: { month: newCurrent.month, year: newCurrent.year } });
   }
+
   toggleSetSecondDate(day) {
     this.setState({
       setSecondDate: !this.state.setSecondDate
@@ -154,11 +161,11 @@ export default class Calendar extends React.Component {
   showPicker() {
     this.setState({ hidePicker: false });
   }
+
   hidePicker() {
-    this.setState({
-      hidePicker: true,
-    });
+    this.setState({ hidePicker: true });
   }
+
   clearDates() {
     this.setState({
       from: null,
@@ -168,6 +175,7 @@ export default class Calendar extends React.Component {
     });
     this.props.setStayLength(0);
   }
+
   chooseCheckIn() {
     this.showPicker();
     this.setState({
@@ -175,6 +183,7 @@ export default class Calendar extends React.Component {
     });
     this.setCheckin('Check In');
   }
+
   chooseCheckOut() {
     this.showPicker();
     this.setState({
@@ -182,31 +191,34 @@ export default class Calendar extends React.Component {
     });
     this.setCheckout('Check Out');
   }
+
   setCheckin(value) {
     const elem = document.getElementById("checkin");
-    if(elem) {
+    if (elem) {
       elem.innerHTML = value;
     }
   }
+
   setCheckout(value) {
     const elem = document.getElementById("checkout");
     if (elem) {
       elem.innerHTML = value;
     }
   }
+
   render() {
     return (
       <div className="calendar" ref={this.setWrapperRef}>
         <div className="calendar__header">
           <span>Dates</span>
           <div className="calendar__dates">
-            <button id="checkin" className={`calendar__dates__checkin${!this.state.hidePicker && !this.state.setSecondDate ? ' calendar__dates__active' : ''}${ !this.state.from ? ' calendar__dates__unassigned' : ''}`} onClick={this.chooseCheckIn}>
+            <button id="checkin" className={`calendar__dates__checkin${!this.state.hidePicker && !this.state.setSecondDate ? ' calendar__dates__active' : ''}${!this.state.from ? ' calendar__dates__unassigned' : ''}`} onClick={this.chooseCheckIn}>
               Check In
-              </button>
+            </button>
             <img src="./images/right-arrow.png" alt="date from - to separator" className="calendar__dates__separator"></img>
-            <button id="checkout" className={`calendar__dates__checkout${!this.state.hidePicker && this.state.setSecondDate ? ' calendar__dates__active' : ''}${ !this.state.to ? ' calendar__dates__unassigned' : ''}`} onClick={this.chooseCheckOut}>
+            <button id="checkout" className={`calendar__dates__checkout${!this.state.hidePicker && this.state.setSecondDate ? ' calendar__dates__active' : ''}${!this.state.to ? ' calendar__dates__unassigned' : ''}`} onClick={this.chooseCheckOut}>
               Check Out
-              </button>
+            </button>
           </div>
         </div>
         <div id="datePicker" className={`calendar__picker${this.state.hidePicker ? ' hidden' : ''}`}>
@@ -228,7 +240,6 @@ export default class Calendar extends React.Component {
             from={this.state.from}
             to={this.state.to}
             unavailable={unavailableDates}
-            minStay={this.props.minStay}
             naDays={this.state.naDays}
             handleSetDay={this.handleSetDay}
             setSecondDate={this.state.setSecondDate}

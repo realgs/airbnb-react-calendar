@@ -54,7 +54,7 @@ export default class Reservation extends React.Component {
     this.setState({
       amount,
       serviceFee,
-      total
+      total,
     });
   }
 
