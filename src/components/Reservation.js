@@ -41,11 +41,17 @@ export default class Reservation extends React.Component {
 
   setStayLength (newStayLength) {
     const stayLength = newStayLength ? Math.abs(newStayLength) : 0;
+    this.setState({
+      stayLength,
+    });
+    this.setDetails(stayLength);
+  }
+
+  setDetails(stayLength) {
     const amount = round2Decimals(this.state.price * stayLength);
     const serviceFee = round2Decimals(this.state.price * stayLength * 0.1);
     const total = round2Decimals(amount + this.state.cleaningFee + serviceFee - this.state.bonus);
     this.setState({
-      stayLength,
       amount,
       serviceFee,
       total

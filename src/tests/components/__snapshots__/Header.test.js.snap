@@ -1,0 +1,58 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Should match Header snapshot. 1`] = `
+<div
+  className="header"
+>
+  <div
+    className="header__price"
+  >
+    <div
+      className="header__price__value"
+    >
+      undefined19.9
+    </div>
+    <div
+      className="header__price__note"
+    >
+      per night
+    </div>
+  </div>
+  <div
+    className="header__rating"
+  >
+    <div>
+      <img
+        className="header__rating__star"
+        key="star0"
+        src="./images/star.png"
+      />
+      <img
+        className="header__rating__star"
+        key="star1"
+        src="./images/star.png"
+      />
+      <img
+        className="header__rating__star"
+        key="star2"
+        src="./images/star.png"
+      />
+      <img
+        className="header__rating__halfStar"
+        key="halfStar"
+        src="./images/halfStar.png"
+      />
+      <img
+        className="header__rating__blankStar"
+        key="blankStar0"
+        src="./images/blankStar.png"
+      />
+    </div>
+    <div
+      className="header__reviews"
+    >
+      123
+    </div>
+  </div>
+</div>
+`;

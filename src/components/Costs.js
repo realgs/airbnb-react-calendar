@@ -1,5 +1,4 @@
 import React from 'react';
-import {round2Decimals} from '../helpers/calendar';
 
 const Costs = ({ price, currency, stayLength, cleaningFee, bonus, amount, serviceFee, total }) => {
 

@@ -1,0 +1,68 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Should match Costs snapshot. 1`] = `
+<div
+  className="costs"
+>
+  <div
+    className="costs__cost"
+  >
+    <span
+      className="costs__cost__description"
+    >
+      19.9
+       x 
+      0
+       days
+    </span>
+    <span
+      className="costs__cost__amount"
+    >
+      undefinedundefined
+    </span>
+  </div>
+  <div
+    className="costs__cost"
+  >
+    <span
+      className="costs__cost__description"
+    >
+      Cleaning fee
+    </span>
+    <span
+      className="costs__cost__amount"
+    >
+      undefined10
+    </span>
+  </div>
+  <div
+    className="costs__cost"
+  >
+    <span
+      className="costs__cost__description"
+    >
+      Service fee
+    </span>
+    <span
+      className="costs__cost__amount"
+    >
+      undefinedundefined
+    </span>
+  </div>
+  <div
+    className="costs__cost costs__sum"
+  >
+    <span
+      className="costs__cost__description"
+    >
+      Total
+    </span>
+    <span
+      className="costs__cost__amount"
+    >
+      $
+      0
+    </span>
+  </div>
+</div>
+`;
