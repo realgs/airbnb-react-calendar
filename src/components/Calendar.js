@@ -102,7 +102,8 @@ export default class Calendar extends React.Component {
       this.toggleSetSecondDate();
       this.state.from && this.hidePicker();
     } else if (this.canSet(day)) {
-      this.state.to && this.updateStayLength(day, this.state.to);
+      this.state.to && day < this.state.to ? this.updateStayLength(day, this.state.to) : this.updateStayLength(day, day);
+      //this.state.to && day > this.state.to && this.updateStayLength(day, day);
       this.setState({
         from: day,
         to: day < this.state.to ? this.state.to : null,
@@ -120,7 +121,7 @@ export default class Calendar extends React.Component {
   }
 
   handleSetCandidate(day) {
-    this.setState({ candidate: day });
+    day && this.setState({ candidate: day });
   }
 
   handleDeleteCandidate(day) {
